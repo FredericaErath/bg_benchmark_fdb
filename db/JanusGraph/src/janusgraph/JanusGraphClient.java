@@ -177,7 +177,6 @@ public class JanusGraphClient extends DB{
 		props = getProperties();
 		cache = Boolean.parseBoolean(props.getProperty("doCache", "true"));
 		String janusGraphIp = props.getProperty("janusGraphIp", "128.110.96.75");
-		System.out.println(janusGraphIp);
 		logger.setLevel(Level.WARNING);
 		if (!initialized) {
 			synchronized (INIT_LOCK) {

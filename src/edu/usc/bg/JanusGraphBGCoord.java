@@ -45,6 +45,10 @@ public class JanusGraphBGCoord {
     Properties props = new Properties();
     Properties coreProps = new Properties();
 
+
+    private static final String BACKUP_SCRIPT = "~/bg_benchmark_fdb/backupfdb.sh";
+    private static final String RESTORE_SCRIPT = "~/bg_benchmark_fdb/restorefdb.sh";
+
     private static final class Stat {
         final double tp;
         final boolean sla;
@@ -112,21 +116,30 @@ public class JanusGraphBGCoord {
             }
         }
         coord.isWrite = coord.ifWriteWorkload();
-        if(!coord.isWrite){
-            // if is not write work load, load and warmup once
-            if(coord.doLoad){
-                coord.clearDBFDBManner();
-                Process loadProcess = coord.loadDB();
+        // if is not write work load, load and warmup once
+        // each rating experiment just need to load and do warmup once, then copy the backup file to current fdb
+        if(coord.doLoad){
+            coord.clearDBFDBManner();
+            Process loadProcess = coord.loadDB();
 
-                String bgLoadLog = coord.watchProcessOutput(loadProcess,
-                        "SHUTDOWN!!!",
-                        "mainclass");
+            String bgLoadLog = coord.watchProcessOutput(loadProcess,
+                    "SHUTDOWN!!!",
+                    "mainclass");
 
-                coord.saveToFile(directory+"/BGMainLoad-" + "0" +".log", bgLoadLog);
-            }
-            if(coord.doWarmup){
-                coord.warmUp(0);
-            }
+            coord.saveToFile(directory + "/BGMainLoad-" + "0" +".log", bgLoadLog);
+        }
+
+        if(coord.doWarmup){
+            coord.warmUp(0);
+        }
+
+        if(coord.isWrite){
+            long start = System.currentTimeMillis();
+            runLocalCmd(BACKUP_SCRIPT);
+            long end = System.currentTimeMillis();
+            long duration = end - start;
+
+            System.out.println("Backup duration: " + duration + " ms");
         }
 
         if(coord.objective.equals("socialites")){
@@ -435,18 +448,7 @@ public class JanusGraphBGCoord {
         if(isWrite){
             // if it's write workload, do load and warmup each time
             if(doLoad) {
-                clearDBFDBManner();
-                Process loadProcess = loadDB();
-
-                String bgLoadLog = watchProcessOutput(loadProcess,
-                        "SHUTDOWN!!!",
-                        "mainclass");
-
-                saveToFile(directory+"/BGMainLoad-" + count +".log", bgLoadLog);
-            }
-
-            if(doWarmup){
-                warmUp(count);
+                loadDBFDBManner();
             }
         }
 
@@ -492,9 +494,14 @@ public class JanusGraphBGCoord {
         return pb.start();
     }
 
-    private void loadDBFDBManner() {
+    private void loadDBFDBManner() throws IOException, InterruptedException {
+        // restore
+        long start = System.currentTimeMillis();
+        runLocalCmd(RESTORE_SCRIPT);
+        long end = System.currentTimeMillis();
+        long duration = end - start;
 
-
+        System.out.println("Restore Duration: " + duration + " ms");
     }
 
     private Process loadDB() throws IOException {

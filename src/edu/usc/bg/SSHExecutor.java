@@ -73,7 +73,7 @@ public class SSHExecutor {
         executeLocalCommand(timeoutCmd);
     }
 
-    private static void runLocalCmd(String shellCmd) throws IOException, InterruptedException {
+    public static void runLocalCmd(String shellCmd) throws IOException, InterruptedException {
         executeLocalCommand(shellCmd);
     }
 
