@@ -46,8 +46,8 @@ public class JanusGraphBGCoord {
     Properties coreProps = new Properties();
 
 
-    private static final String BACKUP_SCRIPT = "~/bg_benchmark_fdb/backupfdb.sh";
-    private static final String RESTORE_SCRIPT = "~/bg_benchmark_fdb/restorefdb.sh";
+    private static final String BACKUP_SCRIPT = "~/bg_benchmark_fdb/backup.sh";
+    private static final String RESTORE_SCRIPT = "~/bg_benchmark_fdb/restore.sh";
 
     private static final class Stat {
         final double tp;
@@ -135,7 +135,7 @@ public class JanusGraphBGCoord {
 
         if(coord.isWrite){
             long start = System.currentTimeMillis();
-            runLocalCmd(BACKUP_SCRIPT);
+            runLocalCmd(BACKUP_SCRIPT, "0");
             long end = System.currentTimeMillis();
             long duration = end - start;
 
@@ -448,7 +448,7 @@ public class JanusGraphBGCoord {
         if(isWrite){
             // if it's write workload, do load and warmup each time
             if(doLoad) {
-                loadDBFDBManner();
+                loadDBFDBManner(count);
             }
         }
 
@@ -494,10 +494,10 @@ public class JanusGraphBGCoord {
         return pb.start();
     }
 
-    private void loadDBFDBManner() throws IOException, InterruptedException {
+    private void loadDBFDBManner(int count) throws IOException, InterruptedException {
         // restore
         long start = System.currentTimeMillis();
-        runLocalCmd(RESTORE_SCRIPT);
+        runLocalCmd(RESTORE_SCRIPT, String.valueOf(count));
         long end = System.currentTimeMillis();
         long duration = end - start;
 

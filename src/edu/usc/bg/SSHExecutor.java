@@ -73,16 +73,24 @@ public class SSHExecutor {
         executeLocalCommand(timeoutCmd);
     }
 
-    public static void runLocalCmd(String shellCmd) throws IOException, InterruptedException {
-        executeLocalCommand(shellCmd);
+    public static void runLocalCmd(String shellCmd, String... params)
+            throws IOException, InterruptedException {
+        // build "shellCmd param1 param2 …"
+        StringBuilder full = new StringBuilder(shellCmd);
+        for (String p : params) {
+            full.append(" ").append(p);
+        }
+        executeLocalCommand(full.toString());
     }
 
-    private static void executeLocalCommand(String cmd) throws IOException, InterruptedException {
+    private static void executeLocalCommand(String cmd)
+            throws IOException, InterruptedException {
         System.out.println("Running: " + cmd);
         ProcessBuilder pb = new ProcessBuilder("bash", "-c", cmd);
         pb.redirectErrorStream(true);
         Process p = pb.start();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(p.getInputStream()))) {
             String line;
             while ((line = br.readLine()) != null) {
                 System.out.println("[OUTPUT] " + line);

@@ -37,6 +37,8 @@ import org.apache.tinkerpop.gremlin.structure.io.binary.TypeSerializerRegistry;
 import org.apache.tinkerpop.gremlin.util.ser.GraphBinaryMessageSerializerV1;
 import org.janusgraph.graphdb.tinkerpop.JanusGraphIoRegistry;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Instant;
@@ -249,9 +251,9 @@ public class JanusGraphClient extends DB{
 //					.by(__.outE("friendship").has("status", "friend").count())
 //					.by(__.outE("friendship").has("status", "pending").count())
 //					.tryNext().orElse(null);
-			stats.put("usercount", "100000");
+			stats.put("usercount", props.getProperty("usercount"));
 			stats.put("resourcesperuser", "0");
-			stats.put("avgfriendsperuser", "5");
+			stats.put("avgfriendsperuser", String.valueOf(Integer.parseInt(props.getProperty("friendcountperuser"))/2));
 			stats.put("avgpendingperuser", "0");
 			return stats;
 //			if (resultMap == null) {
