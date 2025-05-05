@@ -346,26 +346,29 @@ public class JanusGraphBGCoord {
             case 1000:
                 if(friendCount == 10){
                     maxExeTime = 20;
+                    warmUpWorkload = "workloads/warmupWorkload1";
                 } else {
                     maxExeTime = 120;
+                    warmUpWorkload = "workloads/warmupWorkload2";
                 }
-                warmUpWorkload = "workloads/warmupWorkload1";
                 break;
             case 10000:
                 if(friendCount == 10){
                     maxExeTime = 300;
+                    warmUpWorkload = "workloads/warmupWorkload3";
                 } else {
                     maxExeTime = 600;
+                    warmUpWorkload = "workloads/warmupWorkload4";
                 }
-                warmUpWorkload = "workloads/warmupWorkload2";
                 break;
             case 100000:
                 if(friendCount == 10){
                     maxExeTime = 600;
+                    warmUpWorkload = "workloads/warmupWorkload5";
                 } else {
                     maxExeTime = 2400;
+                    warmUpWorkload = "workloads/warmupWorkload6";
                 }
-                warmUpWorkload = "workloads/warmupWorkload3";
                 break;
         }
         System.out.println("WarmUp for " + maxExeTime + " seconds...");

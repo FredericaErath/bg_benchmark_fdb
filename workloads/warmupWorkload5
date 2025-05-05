@@ -1,6 +1,6 @@
 operationcount=0
 workload=edu.usc.bg.workloads.CoreWorkload
-usercount=10000
+usercount=100000
 friendcountperuser=10
 
 #user ativities
