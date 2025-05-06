@@ -118,16 +118,16 @@ public class JanusGraphBGCoord {
         coord.isWrite = coord.ifWriteWorkload();
         // if is not write work load, load and warmup once
         // each rating experiment just need to load and do warmup once, then copy the backup file to current fdb
-        if(coord.doLoad){
-            coord.clearDBFDBManner();
-            Process loadProcess = coord.loadDB();
-
-            String bgLoadLog = coord.watchProcessOutput(loadProcess,
-                    "SHUTDOWN!!!",
-                    "mainclass");
-
-            coord.saveToFile(directory + "/BGMainLoad-" + "0" +".log", bgLoadLog);
-        }
+//        if(coord.doLoad){
+//            coord.clearDBFDBManner();
+//            Process loadProcess = coord.loadDB();
+//
+//            String bgLoadLog = coord.watchProcessOutput(loadProcess,
+//                    "SHUTDOWN!!!",
+//                    "mainclass");
+//
+//            coord.saveToFile(directory + "/BGMainLoad-" + "0" +".log", bgLoadLog);
+//        }
 
         if(coord.doWarmup){
             coord.warmUp(0);
@@ -366,7 +366,7 @@ public class JanusGraphBGCoord {
                     maxExeTime = 1200;
                     warmUpWorkload = "workloads/warmupWorkload5";
                 } else {
-                    maxExeTime = 4800;
+                    maxExeTime = 3600;
                     warmUpWorkload = "workloads/warmupWorkload6";
                 }
                 break;
