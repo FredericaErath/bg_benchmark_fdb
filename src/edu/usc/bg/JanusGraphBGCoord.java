@@ -46,8 +46,8 @@ public class JanusGraphBGCoord {
     Properties coreProps = new Properties();
 
 
-    private static final String BACKUP_SCRIPT = "~/bg_benchmark_fdb/backup.sh";
-    private static final String RESTORE_SCRIPT = "~/bg_benchmark_fdb/restore.sh";
+    private static final String BACKUP_SCRIPT = "~/bg_benchmark_fdb/backupfdb.sh";
+    private static final String RESTORE_SCRIPT = "~/bg_benchmark_fdb/restorefdb.sh";
 
     private static final class Stat {
         final double tp;
