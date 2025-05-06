@@ -366,7 +366,7 @@ public class JanusGraphBGCoord {
                     maxExeTime = 1200;
                     warmUpWorkload = "workloads/warmupWorkload5";
                 } else {
-                    maxExeTime = 2400;
+                    maxExeTime = 4800;
                     warmUpWorkload = "workloads/warmupWorkload6";
                 }
                 break;
