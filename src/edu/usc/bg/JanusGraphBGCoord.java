@@ -348,22 +348,22 @@ public class JanusGraphBGCoord {
                     maxExeTime = 20;
                     warmUpWorkload = "workloads/warmupWorkload1";
                 } else {
-                    maxExeTime = 120;
+                    maxExeTime = 300;
                     warmUpWorkload = "workloads/warmupWorkload2";
                 }
                 break;
             case 10000:
                 if(friendCount == 10){
-                    maxExeTime = 300;
+                    maxExeTime = 600;
                     warmUpWorkload = "workloads/warmupWorkload3";
                 } else {
-                    maxExeTime = 600;
+                    maxExeTime = 1200;
                     warmUpWorkload = "workloads/warmupWorkload4";
                 }
                 break;
             case 100000:
                 if(friendCount == 10){
-                    maxExeTime = 600;
+                    maxExeTime = 1200;
                     warmUpWorkload = "workloads/warmupWorkload5";
                 } else {
                     maxExeTime = 2400;
