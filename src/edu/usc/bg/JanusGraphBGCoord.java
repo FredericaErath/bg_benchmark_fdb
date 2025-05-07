@@ -455,8 +455,8 @@ public class JanusGraphBGCoord {
         if(isWrite){
             // if it's write workload, do load and warmup each time
             if(doLoad) {
-                loadDB();
-                // loadDBFDBManner(count);
+                // loadDB();
+                loadDBFDBManner(count);
             }
         }
 
