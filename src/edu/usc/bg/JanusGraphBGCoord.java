@@ -38,7 +38,7 @@ public class JanusGraphBGCoord {
     private String objective;
     private boolean validation;
     private boolean doLoad = false;
-    private boolean doFirstLoad = false;
+    private boolean doFirstLoad = true;
     private boolean doCache = true;
     private boolean doMonitor = false;
     private boolean doWarmup = true;
@@ -455,7 +455,8 @@ public class JanusGraphBGCoord {
         if(isWrite){
             // if it's write workload, do load and warmup each time
             if(doLoad) {
-                loadDBFDBManner(count);
+                loadDB();
+                // loadDBFDBManner(count);
             }
         }
 
