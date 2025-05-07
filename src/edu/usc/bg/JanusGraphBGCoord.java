@@ -38,6 +38,7 @@ public class JanusGraphBGCoord {
     private String objective;
     private boolean validation;
     private boolean doLoad = false;
+    private boolean doFirstLoad = false;
     private boolean doCache = true;
     private boolean doMonitor = false;
     private boolean doWarmup = true;
@@ -118,16 +119,19 @@ public class JanusGraphBGCoord {
         coord.isWrite = coord.ifWriteWorkload();
         // if is not write work load, load and warmup once
         // each rating experiment just need to load and do warmup once, then copy the backup file to current fdb
-        if(coord.doLoad){
-            coord.clearDBFDBManner();
-            Process loadProcess = coord.loadDB();
+        if (coord.doFirstLoad){
+            if(coord.doLoad){
+                coord.clearDBFDBManner();
+                Process loadProcess = coord.loadDB();
 
-            String bgLoadLog = coord.watchProcessOutput(loadProcess,
-                    "SHUTDOWN!!!",
-                    "mainclass");
+                String bgLoadLog = coord.watchProcessOutput(loadProcess,
+                        "SHUTDOWN!!!",
+                        "mainclass");
 
-            coord.saveToFile(directory + "/BGMainLoad-" + "0" +".log", bgLoadLog);
+                coord.saveToFile(directory + "/BGMainLoad-" + "0" +".log", bgLoadLog);
+            }
         }
+
 
         if(coord.doWarmup){
             coord.warmUp(0);
